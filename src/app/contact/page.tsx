@@ -40,8 +40,13 @@ const contactMethods = [
 ];
 
 export const metadata: Metadata = {
-  title: "Contact Burki Books",
-  description: "Get in touch with the Burki Books team for orders, partnerships, and general inquiries.",
+  title: "Contact Us – Burki Books Pakistan",
+  description:
+    "Get in touch with Burki Books for orders, book inquiries, bulk purchases, and partnerships. Reach us via WhatsApp, phone, or email.",
+  openGraph: {
+    title: "Contact Burki Books",
+    description: "Reach us for orders, inquiries, and partnerships.",
+  },
 };
 
 export default function ContactPage() {

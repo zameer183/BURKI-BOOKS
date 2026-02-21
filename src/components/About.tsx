@@ -29,7 +29,7 @@ export default function About() {
               of new and old books across a wide spectrum of genres, including Fiction, History, Politics, and much more.
             </p>
             <p className="text-white/70 leading-relaxed text-sm">
-              Founded in Lahore on October 30, 2021, by <strong className="text-white">Faridoon Burki</strong>,
+              Founded in Lahore on October 30, 2021, by <a href="https://www.facebook.com/share/1C6TLz4jCG/" target="_blank" rel="noreferrer" className="text-white font-bold hover:underline underline-offset-2 transition">Faridoon Burki</a>,
               a passionate social and environmental activist hailing from South Waziristan.
               Driven by a mission to make reading accessible, the platform quickly established a strong presence.
             </p>

@@ -10,6 +10,8 @@ const offerBooks = [
   { slug: "great-travel-at-desert", title: "Great Travel at Desert", author: "Sanchit Howdy", oldPrice: "Rs. 1,100", price: "Rs. 850", image: "/images/product-item6.jpg" },
   { slug: "the-lady-beauty-scarlett", title: "The Lady Beauty Scarlett", author: "Arthur Doyle", oldPrice: "Rs. 1,800", price: "Rs. 1,350", image: "/images/product-item7.jpg" },
   { slug: "once-upon-a-time", title: "Once Upon a Time", author: "Klien Marry", oldPrice: "Rs. 1,000", price: "Rs. 750", image: "/images/product-item8.jpg" },
+  { slug: "long-walk-to-freedom", title: "Long Walk to Freedom", author: "Nelson Mandela", oldPrice: "Rs. 2,000", price: "Rs. 1,600", image: "/images/book-long-walk-freedom.jpeg" },
+  { slug: "the-pathans", title: "The Pathans", author: "Sir Olaf Caroe", oldPrice: "Rs. 2,200", price: "Rs. 1,800", image: "/images/book-pathans.jpeg" },
 ];
 
 function toBook(b: typeof offerBooks[number]): Book {
@@ -45,20 +47,20 @@ export default function SpecialOffer() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
           {offerBooks.map((book) => (
             <div
               key={book.slug}
               className="group relative cursor-pointer rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
               onClick={() => goToDetail(book.slug)}
             >
-              <figure className="bg-[#f7f7f7] p-3 aspect-[3/4] flex items-center justify-center">
+              <figure className="aspect-[3/4] overflow-hidden">
                 <Image
                   src={book.image}
                   alt={book.title}
                   width={200}
                   height={250}
-                  className="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </figure>
               {/* Hover overlay */}

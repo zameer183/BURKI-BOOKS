@@ -5,22 +5,45 @@ import { useRouter } from "next/navigation";
 import { FaArrowRight, FaBookmark, FaShoppingCart } from "react-icons/fa";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/types/book";
-import type { ProductDetail } from "@/data/products";
+
+interface Product {
+  id: string;
+  slug: string;
+  title: string;
+  author: string;
+  price: number;
+  oldPrice?: number;
+  image: string;
+  description: string;
+  highlights: string[];
+  pages: number;
+  language: string;
+  publisher: string;
+  inStock: boolean;
+}
 
 interface ProductDetailProps {
-  product: ProductDetail;
+  product: Product;
 }
 
 export default function ProductDetail({ product }: ProductDetailProps) {
   const { addToCart } = useCart();
   const router = useRouter();
 
+  const cartBook = {
+    id: product.slug,
+    title: product.title,
+    author: product.author,
+    price: product.price,
+    image: product.image,
+  };
+
   const handleAdd = () => {
-    addToCart(product);
+    addToCart(cartBook);
   };
 
   const handleBuyNow = () => {
-    addToCart(product);
+    addToCart(cartBook);
     router.push("/checkout");
   };
 
@@ -59,20 +82,12 @@ export default function ProductDetail({ product }: ProductDetailProps) {
 
           <div className="bg-[#f7f7f7] rounded-xl p-4 mb-5 grid grid-cols-2 gap-3 text-sm">
             <div>
-              <p className="text-gray-400 uppercase tracking-widest text-[10px]">Pages</p>
-              <p className="text-dark font-semibold">{product.pages}</p>
-            </div>
-            <div>
               <p className="text-gray-400 uppercase tracking-widest text-[10px]">Language</p>
               <p className="text-dark font-semibold">{product.language}</p>
             </div>
             <div>
-              <p className="text-gray-400 uppercase tracking-widest text-[10px]">Publisher</p>
-              <p className="text-dark font-semibold">{product.publisher}</p>
-            </div>
-            <div>
               <p className="text-gray-400 uppercase tracking-widest text-[10px]">SKU</p>
-              <p className="text-dark font-semibold">{product.id.replace(/[^a-z0-9]/gi, "-")}</p>
+              <p className="text-dark font-semibold">{product.slug}</p>
             </div>
           </div>
 

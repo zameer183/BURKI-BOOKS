@@ -12,7 +12,7 @@ export default function Footer() {
             <Logo theme="light" />
             <div className="flex flex-wrap justify-center gap-1.5">
               {[
-                { icon: FaFacebookF, href: "https://www.facebook.com/share/12K9YxFJztb/" },
+                { icon: FaFacebookF, href: "https://www.facebook.com/share/1C6TLz4jCG/" },
                 { icon: FaInstagram, href: "https://www.instagram.com/burkibooks/profilecard/?igsh=MW05aGt2c3R6eWFwZA==" },
                 { icon: FaWhatsapp, href: "https://wa.me/message/HUW2DFBLWKKLI1" },
                 { icon: FaTwitter, href: "https://x.com/BurkiBooks?t=6L-KtcaGlaMLkh9BzDP5oQ&s=09" },
@@ -33,16 +33,7 @@ export default function Footer() {
           </div>
 
           {/* Main Grid - 2 cols mobile, 4 cols desktop */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-            {/* About - hidden on mobile to save height */}
-            <div className="hidden md:block md:col-span-1">
-              <h5 className="text-sm font-semibold text-white mb-3">About</h5>
-              <p className="text-white/60 text-xs leading-relaxed">
-                Burki Books is a growing online bookstore offering a diverse collection of new and old books.
-                Founded in Lahore by Faridoon Burki, we ship books across the globe.
-              </p>
-            </div>
-
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
             {/* Quick Links */}
             <div>
               <h5 className="text-xs font-semibold text-white mb-2 md:text-sm md:mb-3">Quick Links</h5>
@@ -74,7 +65,7 @@ export default function Footer() {
                   <span className="text-white/20">|</span>
                   <a href="https://wa.me/message/HUW2DFBLWKKLI1" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition inline-flex items-center gap-1"><FaWhatsapp /> WhatsApp</a>
                   <span className="text-white/20">|</span>
-                  <a href="https://www.facebook.com/share/12K9YxFJztb/" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition inline-flex items-center gap-1"><FaFacebookF /> Facebook</a>
+                  <a href="https://www.facebook.com/share/1C6TLz4jCG/" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition inline-flex items-center gap-1"><FaFacebookF /> Facebook</a>
                   <span className="text-white/20">|</span>
                   <a href="https://www.instagram.com/burkibooks/profilecard/?igsh=MW05aGt2c3R6eWFwZA==" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition inline-flex items-center gap-1"><FaInstagram /> Instagram</a>
                   <span className="text-white/20">|</span>
@@ -103,7 +94,7 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.facebook.com/share/12K9YxFJztb/" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition inline-flex items-center gap-1.5">
+                  <a href="https://www.facebook.com/share/1C6TLz4jCG/" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition inline-flex items-center gap-1.5">
                     <FaFacebookF /> Facebook
                   </a>
                 </li>

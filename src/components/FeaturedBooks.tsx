@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import type { Book } from "@/types/book";
@@ -15,20 +15,29 @@ import "swiper/css/pagination";
 
 type FeaturedBook = Book & { slug: string };
 
-const books: FeaturedBook[] = [
-  { id: "peace-life", slug: "simple-way-of-peace-life", title: "Simple Way of Peace Life", author: "Armor Ramsey", price: 1200, image: "/images/product-item1.jpg" },
-  { id: "desert-travel", slug: "great-travel-at-desert", title: "Great Travel at Desert", author: "Sanchit Howdy", price: 950, image: "/images/product-item2.jpg" },
-  { id: "lady-beauty", slug: "the-lady-beauty-scarlett", title: "The Lady Beauty Scarlett", author: "Arthur Doyle", price: 1500, image: "/images/product-item3.jpg" },
-  { id: "once-upon", slug: "once-upon-a-time", title: "Once Upon a Time", author: "Klien Marry", price: 800, image: "/images/product-item4.jpg" },
-  { id: "birds-happy", slug: "birds-gonna-be-happy", title: "Birds Gonna Be Happy", author: "Timbur Hood", price: 1350, image: "/images/single-image.jpg" },
-  { id: "portrait-photo", slug: "portrait-photography", title: "Portrait Photography", author: "Adam Silber", price: 1200, image: "/images/tab-item1.jpg" },
-  { id: "tips-lifestyle", slug: "tips-of-simple-lifestyle", title: "Tips of Simple Lifestyle", author: "Bratt Smith", price: 1100, image: "/images/tab-item3.jpg" },
-];
-
 export default function FeaturedBooks() {
+  const [books, setBooks] = useState<FeaturedBook[]>([]);
   const { addToCart } = useCart();
   const router = useRouter();
   const swiperRef = useRef<SwiperClass | null>(null);
+
+  useEffect(() => {
+    fetch("/api/products?featured=true")
+      .then((res) => res.json())
+      .then((data) => {
+        const mapped = data.map((p: { id: string; slug: string; title: string; author: string; price: number; image: string }) => ({
+          id: p.slug,
+          slug: p.slug,
+          title: p.title,
+          author: p.author,
+          price: p.price,
+          image: p.image,
+        }));
+        setBooks(mapped);
+      })
+      .catch(() => {});
+  }, []);
+
   const canLoop = books.length > 4;
 
   const handleBuyNow = (book: Book) => {
@@ -39,6 +48,8 @@ export default function FeaturedBooks() {
   const navigateToDetail = (slug: string) => {
     router.push(`/product/${slug}`);
   };
+
+  if (books.length === 0) return null;
 
   return (
     <section id="featured-books" className="py-8 md:py-12 bg-[#f5f5f5]">

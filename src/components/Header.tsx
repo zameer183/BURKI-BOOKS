@@ -61,7 +61,7 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
           <div className="flex gap-4">
             <a
-              href="https://www.facebook.com/share/12K9YxFJztb/"
+              href="https://www.facebook.com/share/1C6TLz4jCG/"
               target="_blank"
               rel="noreferrer"
               className="hover:text-gray-200 transition"

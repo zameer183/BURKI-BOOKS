@@ -5,8 +5,13 @@ import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Featured Books | Burki Books",
-  description: "Discover curated collections, staff picks, and limited-time highlights from Burki Books.",
+  title: "Featured Books – Handpicked Reads from Burki Books",
+  description:
+    "Discover curated collections, staff picks, and limited-time featured books. Handpicked by Burki Books for readers across Pakistan.",
+  openGraph: {
+    title: "Featured Books – Handpicked Reads from Burki Books",
+    description: "Curated collections and staff picks from Burki Books.",
+  },
 };
 
 export default function FeaturedPage() {

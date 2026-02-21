@@ -1,50 +1,68 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
-import { allProducts } from "@/data/products";
+import type { Book } from "@/types/book";
+
+interface ApiProduct {
+  id: string;
+  slug: string;
+  title: string;
+  author: string;
+  price: number;
+  image: string;
+}
 
 export default function ProductGrid() {
+  const [products, setProducts] = useState<ApiProduct[]>([]);
   const { addToCart } = useCart();
   const router = useRouter();
 
-  const handleBuyNow = (product: typeof allProducts[number]) => {
-    addToCart(product);
+  useEffect(() => {
+    fetch("/api/products")
+      .then((res) => res.json())
+      .then((data) => setProducts(data.slice(0, 18)))
+      .catch(() => {});
+  }, []);
+
+  const toBook = (p: ApiProduct): Book => ({
+    id: p.slug,
+    title: p.title,
+    author: p.author,
+    price: p.price,
+    image: p.image,
+  });
+
+  const handleBuyNow = (product: ApiProduct) => {
+    addToCart(toBook(product));
     router.push("/checkout");
   };
 
   return (
     <section className="py-12 md:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10 text-center md:text-left">
-          <div>
-            <p className="uppercase text-xs tracking-[0.4em] text-light-gray mb-3">All Books</p>
-            <h2 className="text-3xl md:text-4xl font-semibold text-dark">Browse Our Collection</h2>
-          </div>
-          <Link
-            href="/featured"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-teal text-teal text-sm font-semibold hover:bg-teal hover:text-white transition"
-          >
-            View All
-          </Link>
+        <div className="text-center mb-8">
+          <p className="uppercase text-xs tracking-[0.4em] text-light-gray mb-3">All Books</p>
+          <h2 className="text-3xl md:text-4xl font-semibold text-dark">Browse Our Collection</h2>
         </div>
 
-        <div className="grid gap-5 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {allProducts.map((product) => (
+        <div className="grid gap-5 grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+          {products.map((product) => (
             <article
               key={product.slug}
               className="group relative rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer"
               onClick={() => router.push(`/product/${product.slug}`)}
             >
-              <figure className="bg-[#f7f7f7] p-3 aspect-[3/4] flex items-center justify-center">
+              <figure className="aspect-[3/4] overflow-hidden">
                 <Image
                   src={product.image}
                   alt={product.title}
                   width={200}
                   height={250}
-                  className="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </figure>
               {/* Hover overlay */}
@@ -58,7 +76,7 @@ export default function ProductGrid() {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      addToCart(product);
+                      addToCart(toBook(product));
                     }}
                     className="flex-1 h-9 rounded-lg bg-[#1c7c84] text-white text-xs font-medium transition-all duration-300 hover:bg-[#176a71]"
                   >
@@ -77,6 +95,16 @@ export default function ProductGrid() {
               </div>
             </article>
           ))}
+        </div>
+
+        {/* View All Button */}
+        <div className="flex justify-center mt-8">
+          <Link
+            href="/featured"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-teal text-teal text-sm font-semibold hover:bg-teal hover:text-white transition"
+          >
+            View All
+          </Link>
         </div>
       </div>
     </section>

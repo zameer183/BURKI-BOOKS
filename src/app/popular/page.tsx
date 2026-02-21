@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import PopularBooks from "@/components/PopularBooks";
 import SpecialOffer from "@/components/SpecialOffer";
 import Newsletter from "@/components/Newsletter";
@@ -5,8 +6,13 @@ import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Popular Books | Burki Books",
-  description: "Browse trending titles and bestsellers that Burki Books readers are ordering right now.",
+  title: "Popular Books – Trending & Bestselling Books in Pakistan",
+  description:
+    "Browse the most popular and trending books in Pakistan. Bestsellers in Fiction, History, Islamic Studies, Politics & more. Order online from Burki Books.",
+  openGraph: {
+    title: "Popular Books – Trending & Bestselling Books in Pakistan",
+    description: "Browse the most popular and trending books in Pakistan at Burki Books.",
+  },
 };
 
 export default function PopularPage() {
@@ -23,7 +29,7 @@ export default function PopularPage() {
             </p>
           </div>
         </section>
-        <PopularBooks />
+        <Suspense><PopularBooks showAll /></Suspense>
         <SpecialOffer />
         <Newsletter />
       </main>
