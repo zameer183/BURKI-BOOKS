@@ -1,4 +1,5 @@
 import Footer from "@/components/Footer";
+import ContactForm from "@/components/ContactForm";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -12,22 +13,22 @@ const contactMethods = [
   {
     icon: FaPhoneAlt,
     title: "Call Us",
-    value: "+92 300 1234567",
-    href: "tel:+923001234567",
+    value: "+92 340 2715205",
+    href: "tel:+923402715205",
     description: "Monday to Saturday, 10am - 8pm",
   },
   {
     icon: FaWhatsapp,
     title: "WhatsApp",
-    value: "+92 312 9876543",
-    href: "https://wa.me/923129876543",
+    value: "+92 340 2715205",
+    href: "https://wa.me/923402715205",
     description: "Fastest way to confirm orders & share receipts",
   },
   {
     icon: FaEnvelope,
     title: "Email",
-    value: "hello@burkibooks.com",
-    href: "mailto:hello@burkibooks.com",
+    value: "burkibooks205@gmail.com",
+    href: "mailto:burkibooks205@gmail.com",
     description: "We reply within 24 hours",
   },
   {
@@ -40,18 +41,71 @@ const contactMethods = [
 ];
 
 export const metadata: Metadata = {
-  title: "Contact Us – Burki Books Pakistan",
+  title: "Contact Us – Burki Books | Order Inquiry, WhatsApp & Phone",
   description:
-    "Get in touch with Burki Books for orders, book inquiries, bulk purchases, and partnerships. Reach us via WhatsApp, phone, or email.",
-  openGraph: {
-    title: "Contact Burki Books",
-    description: "Reach us for orders, inquiries, and partnerships.",
+    "Contact Burki Books for book orders, inquiries, bulk purchases, partnerships & collaborations. Reach us via WhatsApp, phone, email or visit us in Lahore, Pakistan. Fast response guaranteed.",
+  keywords: [
+    "contact Burki Books",
+    "Burki Books phone number",
+    "Burki Books WhatsApp",
+    "book order inquiry Pakistan",
+    "Burki Books Lahore address",
+    "buy books Lahore",
+    "online bookstore contact Pakistan",
+  ],
+  alternates: {
+    canonical: "/contact-us",
   },
+  openGraph: {
+    title: "Contact Burki Books – We're One Message Away",
+    description:
+      "Have a question about an order or need a book recommendation? Contact Burki Books via WhatsApp, phone, or email. Located in Lahore, Pakistan.",
+    url: "/contact-us",
+  },
+  twitter: {
+    card: "summary",
+    title: "Contact Burki Books – WhatsApp, Phone & Email",
+    description:
+      "Reach Burki Books for orders, bulk purchases & partnerships. Fast response via WhatsApp & email.",
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BookStore",
+  name: "Burki Books",
+  url: "https://burkibooks.com",
+  telephone: "+923402715205",
+  email: "burkibooks205@gmail.com",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Lahore",
+    addressRegion: "Punjab",
+    addressCountry: "PK",
+    streetAddress: "Cantt, Lahore",
+  },
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    opens: "10:00",
+    closes: "20:00",
+  },
+  sameAs: [
+    "https://www.facebook.com/share/1C6TLz4jCG/",
+    "https://www.instagram.com/burkibooks/",
+    "https://x.com/BurkiBooks",
+    "https://www.tiktok.com/@burkibooks",
+    "https://www.threads.com/@burkibooks",
+  ],
 };
 
 export default function ContactPage() {
   return (
     <div className="min-h-screen bg-cream flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <main className="flex-1">
         <section className="bg-teal text-white py-12">
           <div className="max-w-3xl mx-auto px-4 text-center">
@@ -74,9 +128,9 @@ export default function ContactPage() {
                 rel={method.href.startsWith("http") ? "noreferrer" : undefined}
               >
                 <method.icon className="text-teal text-2xl" />
-                <div>
+                <div className="min-w-0">
                   <p className="text-sm uppercase text-light-gray tracking-widest">{method.title}</p>
-                  <p className="text-xl font-semibold text-dark">{method.value}</p>
+                  <p className="text-lg font-semibold text-dark break-all">{method.value}</p>
                   <p className="text-sm text-gray mt-1">{method.description}</p>
                 </div>
               </Link>
@@ -86,56 +140,7 @@ export default function ContactPage() {
 
         <section className="pb-16">
           <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-10">
-            <div className="bg-white rounded-2xl shadow-sm p-8">
-              <h2 className="text-2xl font-semibold text-dark mb-6">Send us a message</h2>
-              <form action="mailto:hello@burkibooks.com" method="post" encType="text/plain" className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-dark mb-1">Full Name</label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-teal"
-                    placeholder="Your name"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-dark mb-1">Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-teal"
-                    placeholder="you@example.com"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-dark mb-1">Subject</label>
-                  <input
-                    type="text"
-                    name="subject"
-                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-teal"
-                    placeholder="Tell us how we can help"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-dark mb-1">Message</label>
-                  <textarea
-                    name="message"
-                    rows={5}
-                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-teal"
-                    placeholder="Share more details..."
-                    required
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full bg-teal text-white py-3 rounded-xl font-semibold hover:bg-teal-dark transition"
-                >
-                  Send Message
-                </button>
-              </form>
-            </div>
+            <ContactForm />
             <div className="space-y-6">
               <div className="bg-white rounded-2xl shadow-sm p-8">
                 <h2 className="text-2xl font-semibold text-dark mb-3">Store Hours</h2>
@@ -161,8 +166,8 @@ export default function ContactPage() {
                 <p className="text-gray mb-4">
                   For collaborations, author events, or wholesale requests, drop us a line and we will get back to you with next steps.
                 </p>
-                <Link href="mailto:partners@burkibooks.com" className="text-teal font-semibold">
-                  partners@burkibooks.com
+                <Link href="mailto:burkibooks205@gmail.com" className="text-teal font-semibold">
+                  burkibooks205@gmail.com
                 </Link>
               </div>
             </div>

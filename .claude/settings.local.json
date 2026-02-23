@@ -25,7 +25,12 @@
       "Bash(git -C /mnt/d/booksaw-1.0.0/burki-books log --oneline --all)",
       "Bash(git rm --cached \"burki-books-firebase-adminsdk-fbsvc-69b3cb3e24.json\" 2>&1)",
       "Bash(git -C /mnt/d/booksaw-1.0.0/burki-books branch -v)",
-      "Bash(git -C /mnt/d/booksaw-1.0.0/burki-books diff --cached --name-only)"
+      "Bash(git -C /mnt/d/booksaw-1.0.0/burki-books diff --cached --name-only)",
+      "WebFetch(domain:www.burkibooks.com)",
+      "Bash(npx next build 2>&1 | tail -20)",
+      "Bash(npx next build 2>&1 | tail -10)",
+      "Bash(find /mnt/d/booksaw-1.0.0/burki-books/src -type f \\\\\\( -name \"*.ts\" -o -name \"*.tsx\" -o -name \"*.json\" \\\\\\) 2>/dev/null | sort)",
+      "Bash(npx --yes sharp-cli -i src/app/icon.png -o src/app/favicon.ico -- resize 48 48)"
     ]
   }
 }

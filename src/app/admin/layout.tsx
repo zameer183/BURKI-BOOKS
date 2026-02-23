@@ -4,12 +4,13 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AdminAuthProvider, useAdminAuth } from "@/context/AdminAuthContext";
-import { FaBook, FaBoxOpen, FaChartBar, FaCog, FaSignOutAlt, FaBars, FaTimes } from "react-icons/fa";
+import { FaBook, FaBoxOpen, FaChartBar, FaCog, FaEnvelope, FaSignOutAlt, FaBars, FaTimes } from "react-icons/fa";
 
 const navItems = [
   { href: "/admin/dashboard", label: "Dashboard", icon: FaChartBar },
   { href: "/admin/products", label: "Products", icon: FaBook },
   { href: "/admin/orders", label: "Orders", icon: FaBoxOpen },
+  { href: "/admin/messages", label: "Messages", icon: FaEnvelope },
   { href: "/admin/settings", label: "Settings", icon: FaCog },
 ];
 

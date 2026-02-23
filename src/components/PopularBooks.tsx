@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
+import BookImage from "@/components/BookImage";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCart } from "@/context/CartContext";
@@ -40,7 +40,7 @@ interface ApiProduct {
 
 function toBook(b: ApiProduct): Book {
   return {
-    id: b.slug,
+    id: b.id || b.slug,
     title: b.title,
     author: b.author,
     price: b.price,
@@ -161,12 +161,12 @@ export default function PopularBooks({ showAll = false }: { showAll?: boolean })
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {filteredBooks.map((book) => (
               <div
-                key={book.slug}
+                key={book.id}
                 className="group relative cursor-pointer rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
                 onClick={() => goToDetail(book.slug)}
               >
                 <figure className="aspect-[3/4] overflow-hidden">
-                  <Image
+                  <BookImage
                     src={book.image}
                     alt={book.title}
                     width={200}

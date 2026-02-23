@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import BookImage from "@/components/BookImage";
 import { useRouter } from "next/navigation";
 import { FaArrowRight, FaBookmark, FaShoppingCart } from "react-icons/fa";
 import { useCart } from "@/context/CartContext";
@@ -54,7 +54,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
         <div className="lg:sticky lg:top-24">
           <div className="bg-white rounded-2xl shadow-lg p-4 md:p-6">
             <div className="bg-[#f7f7f7] rounded-xl p-6 md:p-8 flex items-center justify-center">
-              <Image
+              <BookImage
                 src={product.image}
                 alt={product.title}
                 width={400}

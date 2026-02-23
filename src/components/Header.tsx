@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaFacebookF, FaInstagram, FaWhatsapp, FaSearch, FaUser, FaShoppingCart, FaBars, FaTimes } from "react-icons/fa";
@@ -12,16 +12,53 @@ const navLinks = [
   { name: "Featured", href: "/featured" },
   { name: "Popular", href: "/popular" },
   { name: "About", href: "/about" },
-  { name: "Contact", href: "/contact" },
+  { name: "Contact", href: "/contact-us" },
 ];
+
+interface SearchResult {
+  id: string;
+  slug: string;
+  title: string;
+  author: string;
+  image: string;
+  price: number;
+}
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isHidden, setIsHidden] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [searching, setSearching] = useState(false);
   const { totalItems, setIsCartOpen } = useCart();
   const router = useRouter();
+  const searchTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleSearch = (value: string) => {
+    setSearchQuery(value);
+    if (searchTimerRef.current) clearTimeout(searchTimerRef.current);
+    if (!value.trim()) {
+      setSearchResults([]);
+      setSearching(false);
+      return;
+    }
+    setSearching(true);
+    searchTimerRef.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/products?q=${encodeURIComponent(value.trim())}`);
+        if (res.ok) {
+          const data = await res.json();
+          setSearchResults(data.slice(0, 6));
+        }
+      } catch {
+        setSearchResults([]);
+      } finally {
+        setSearching(false);
+      }
+    }, 300);
+  };
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -29,7 +66,7 @@ export default function Header() {
     if (hash === "#about") {
       router.replace("/about");
     } else if (hash === "#contact") {
-      router.replace("/contact");
+      router.replace("/contact-us");
     } else if (hash === "#featured-books") {
       router.replace("/featured");
     } else if (hash === "#popular-books") {
@@ -77,7 +114,7 @@ export default function Header() {
               <FaInstagram />
             </a>
             <a
-              href="https://wa.me/message/HUW2DFBLWKKLI1"
+              href="https://wa.me/923402715205"
               target="_blank"
               rel="noreferrer"
               className="hover:text-gray-200 transition"
@@ -145,21 +182,58 @@ export default function Header() {
               </button>
               {searchOpen && (
                 <div className="absolute top-full right-0 mt-2 w-[280px] sm:w-80 bg-white shadow-xl rounded-xl p-3 border border-gray-100 z-50">
-                  <form
-                    onSubmit={(e) => { e.preventDefault(); setSearchOpen(false); }}
-                    className="flex items-center bg-[#f7f7f7] rounded-lg px-3 py-2"
-                  >
+                  <div className="flex items-center bg-[#f7f7f7] rounded-lg px-3 py-2">
                     <FaSearch className="text-gray-400 text-xs flex-shrink-0" />
                     <input
                       type="text"
                       placeholder="Search books..."
+                      value={searchQuery}
+                      onChange={(e) => handleSearch(e.target.value)}
                       className="flex-1 bg-transparent text-sm text-dark focus:outline-none ml-2"
                       autoFocus
                     />
-                    <button type="submit" className="text-xs font-semibold text-white bg-teal px-3 py-1.5 rounded-md hover:bg-teal-dark transition flex-shrink-0">
-                      Search
-                    </button>
-                  </form>
+                    {searchQuery && (
+                      <button
+                        type="button"
+                        onClick={() => { setSearchQuery(""); setSearchResults([]); }}
+                        className="text-gray-400 hover:text-gray-600 mr-1"
+                      >
+                        <FaTimes size={10} />
+                      </button>
+                    )}
+                  </div>
+                  {/* Search Results */}
+                  {searchQuery.trim() && (
+                    <div className="mt-2 max-h-72 overflow-y-auto">
+                      {searching ? (
+                        <p className="text-xs text-gray-400 text-center py-4">Searching...</p>
+                      ) : searchResults.length > 0 ? (
+                        searchResults.map((book) => (
+                          <Link
+                            key={book.id}
+                            href={`/product/${book.slug}`}
+                            onClick={() => { setSearchOpen(false); setSearchQuery(""); setSearchResults([]); }}
+                            className="flex items-center gap-3 p-2 rounded-lg hover:bg-[#f7f7f7] transition"
+                          >
+                            <Image
+                              src={book.image || "/images/placeholder.png"}
+                              alt={book.title}
+                              width={36}
+                              height={50}
+                              className="rounded object-cover w-9 h-12 flex-shrink-0"
+                            />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-xs font-semibold text-dark truncate">{book.title}</p>
+                              <p className="text-[10px] text-gray-500 truncate">{book.author}</p>
+                              <p className="text-[10px] font-bold text-teal">Rs. {book.price}</p>
+                            </div>
+                          </Link>
+                        ))
+                      ) : (
+                        <p className="text-xs text-gray-400 text-center py-4">No books found</p>
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
             </div>

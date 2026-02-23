@@ -9,6 +9,7 @@ export async function GET(req: NextRequest) {
     const category = req.nextUrl.searchParams.get("category");
     const featured = req.nextUrl.searchParams.get("featured");
     const bestSeller = req.nextUrl.searchParams.get("bestSeller");
+    const search = req.nextUrl.searchParams.get("q");
 
     const snapshot = await adminDb.collection("products").get();
 
@@ -28,6 +29,14 @@ export async function GET(req: NextRequest) {
     if (category && category !== "All Genre") {
       products = products.filter(
         (p) => Array.isArray(p.categories) && (p.categories as string[]).includes(category)
+      );
+    }
+    if (search) {
+      const q = search.toLowerCase();
+      products = products.filter(
+        (p) =>
+          (p.title && (p.title as string).toLowerCase().includes(q)) ||
+          (p.author && (p.author as string).toLowerCase().includes(q))
       );
     }
 

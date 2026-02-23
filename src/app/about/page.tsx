@@ -5,9 +5,33 @@ import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Burki Books",
+  title: "About Burki Books – Our Story, Mission & Milestones",
   description:
-    "Learn about Burki Books' story, mission, and milestones. Discover how we bring stories from Pakistan and beyond to booklovers everywhere.",
+    "Learn about Burki Books — Pakistan's growing online bookstore founded in Lahore. Discover our story, mission, milestones, and how we deliver 5,000+ curated books worldwide.",
+  keywords: [
+    "about Burki Books",
+    "Burki Books story",
+    "online bookstore Pakistan",
+    "Burki Books Lahore",
+    "Pakistani bookstore",
+    "Faridoon Burki",
+    "book delivery Pakistan",
+  ],
+  alternates: {
+    canonical: "/about",
+  },
+  openGraph: {
+    title: "About Burki Books – From Lahore to the World",
+    description:
+      "From a passion project in Lahore to delivering curated reads worldwide. 5,000+ books, 500+ happy customers, 3+ countries served.",
+    url: "/about",
+  },
+  twitter: {
+    card: "summary",
+    title: "About Burki Books – Our Story & Mission",
+    description:
+      "Pakistan's growing online bookstore. 5,000+ books across Fiction, History, Islamic Thought & more.",
+  },
 };
 
 export default function AboutPage() {

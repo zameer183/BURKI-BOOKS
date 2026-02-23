@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import BookImage from "@/components/BookImage";
 import Link from "next/link";
 import { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -26,7 +26,7 @@ export default function FeaturedBooks() {
       .then((res) => res.json())
       .then((data) => {
         const mapped = data.map((p: { id: string; slug: string; title: string; author: string; price: number; image: string }) => ({
-          id: p.slug,
+          id: p.id || p.slug,
           slug: p.slug,
           title: p.title,
           author: p.author,
@@ -102,7 +102,7 @@ export default function FeaturedBooks() {
                 className="relative min-h-[300px] sm:min-h-[350px] rounded-2xl overflow-hidden shadow-lg cursor-pointer group"
                 onClick={() => navigateToDetail(book.slug)}
               >
-                <Image
+                <BookImage
                   src={book.image}
                   alt={book.title}
                   fill

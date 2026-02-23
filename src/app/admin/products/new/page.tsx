@@ -7,40 +7,98 @@ import { FaCloudUploadAlt, FaTimes } from "react-icons/fa";
 import MultiSelectDropdown from "@/components/MultiSelectDropdown";
 
 const CATEGORY_OPTIONS = [
-  "All Genre",
-  "Biographies & Memoirs",
-  "Current Affairs & International Relations",
-  "Economics Finance & Business",
-  "Fiction and Literature",
-  "History & Geopolitics",
   "Islamic Thought & Theology",
-  "Pashto Language & Culture",
+  "History & Geopolitics",
+  "Fiction and Literature",
   "Philosophy & Critical Thinking",
-  "Politics",
+  "Current Affairs & International Relations",
+  "Economics, Finance & Business",
+  "Biographies & Memoirs",
+  "Exam Preparation (CSS / PMS)",
+  "Children's Literature & Learning",
   "Self-Help & Motivation",
+  "Pashto Language & Culture",
+  "Politics",
+  "Urdu Literature",
 ];
 
-const SUBCATEGORY_OPTIONS = [
-  "Autobiographies",
-  "Classic Literature",
+const ALL_SUBCATEGORY_OPTIONS = [
+  "Activity Books",
+  "Classical Urdu Literature",
+  "Business Strategy",
+  "Colonial & Post-Colonial Studies",
+  "Comparative Religion",
+  "Compulsory Subjects",
   "Contemporary Fiction",
   "Cultural Studies",
-  "Eastern Philosophy",
-  "Ethics & Morality",
-  "Freedom Fighters",
-  "Global Politics",
-  "Islamic Finance",
+  "Democracy & Governance",
+  "Development Economics",
+  "Diplomacy & Foreign Policy",
+  "Early Learning",
+  "English Classics",
+  "Entrepreneurship",
+  "Essay & Precis Writing",
+  "Folk Stories",
+  "Modern Urdu Prose",
+  "Global Issues",
+  "Greek Philosophy",
+  "Hadith & Sunnah",
+  "Historical Figures",
+  "Ideologies",
+  "Interview Preparation",
+  "Islamic Books for Kids",
   "Islamic History",
-  "Middle Eastern Affairs",
-  "Military History",
-  "Mindfulness & Spirituality",
-  "Modern History",
+  "Islamic Jurisprudence (Fiqh)",
+  "Islamic Philosophy",
+  "Urdu Drama",
+  "Leadership",
+  "Logic & Reasoning",
+  "Maqasid al-Shariah",
+  "Mental Health",
+  "Modern Philosophy",
+  "Moral Stories",
+  "Optional Subjects",
   "Pakistani Politics",
-  "Pashtun History",
-  "Political Leaders",
-  "Scholars & Thinkers",
+  "Pashto Fiction",
+  "Pashto Poetry",
+  "Past Papers",
+  "Personal Finance",
+  "Personal Growth",
+  "Personal Narratives",
+  "Picture Books",
+  "Poetry",
+  "Political Economy",
+  "Political Theory",
+  "Qur'anic Studies",
+  "Regional Politics",
+  "Revolutionaries & Leaders",
+  "Security & Strategy",
+  "Short Stories",
   "South Asian History",
+  "Strategic Studies",
+  "Time Management",
+  "Urdu Poetry",
+  "Urdu Fiction",
+  "War & Conflict",
+  "World History",
+  "Writers & Philosophers",
 ];
+
+const CATEGORY_SUBCATEGORY_MAP: Record<string, string[]> = {
+  "Islamic Thought & Theology": ["Qur'anic Studies", "Hadith & Sunnah", "Islamic Jurisprudence (Fiqh)", "Islamic History", "Maqasid al-Shariah", "Comparative Religion"],
+  "History & Geopolitics": ["South Asian History", "World History", "Colonial & Post-Colonial Studies", "War & Conflict", "Strategic Studies"],
+  "Fiction and Literature": ["Urdu Fiction", "English Classics", "Contemporary Fiction", "Short Stories", "Poetry"],
+  "Philosophy & Critical Thinking": ["Greek Philosophy", "Islamic Philosophy", "Modern Philosophy", "Logic & Reasoning"],
+  "Current Affairs & International Relations": ["Global Issues", "Diplomacy & Foreign Policy", "Regional Politics", "Security & Strategy"],
+  "Economics, Finance & Business": ["Development Economics", "Political Economy", "Entrepreneurship", "Business Strategy", "Personal Finance"],
+  "Biographies & Memoirs": ["Historical Figures", "Revolutionaries & Leaders", "Writers & Philosophers", "Personal Narratives"],
+  "Exam Preparation (CSS / PMS)": ["Compulsory Subjects", "Optional Subjects", "Past Papers", "Essay & Precis Writing", "Interview Preparation"],
+  "Children's Literature & Learning": ["Picture Books", "Moral Stories", "Activity Books", "Early Learning", "Islamic Books for Kids"],
+  "Self-Help & Motivation": ["Personal Growth", "Time Management", "Leadership", "Mental Health"],
+  "Pashto Language & Culture": ["Pashto Poetry", "Pashto Fiction", "Cultural Studies", "Folk Stories"],
+  "Politics": ["Political Theory", "Pakistani Politics", "Democracy & Governance", "Ideologies"],
+  "Urdu Literature": ["Urdu Poetry", "Urdu Fiction", "Urdu Drama", "Classical Urdu Literature", "Modern Urdu Prose"],
+};
 
 export default function NewProductPage() {
   const router = useRouter();
@@ -114,6 +172,24 @@ export default function NewProductPage() {
     .split(",")
     .map((s) => s.trim())
     .filter(Boolean);
+
+  // Dynamically compute available subcategories based on selected categories
+  const availableSubcategories = selectedCategories.length === 0
+    ? ALL_SUBCATEGORY_OPTIONS
+    : [...new Set(selectedCategories.flatMap((cat) => CATEGORY_SUBCATEGORY_MAP[cat] || []))].sort();
+
+  const handleCategoryChange = (vals: string[]) => {
+    const newAvailable = vals.length === 0
+      ? ALL_SUBCATEGORY_OPTIONS
+      : [...new Set(vals.flatMap((cat) => CATEGORY_SUBCATEGORY_MAP[cat] || []))];
+    // Remove subcategories that are no longer available
+    const filteredSubs = selectedSubcategories.filter((sub) => newAvailable.includes(sub));
+    setForm({
+      ...form,
+      categories: vals.join(", "),
+      subcategories: filteredSubs.join(", "),
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -323,12 +399,12 @@ export default function NewProductPage() {
             label="Categories"
             options={CATEGORY_OPTIONS}
             selected={selectedCategories}
-            onChange={(vals) => setForm({ ...form, categories: vals.join(", ") })}
+            onChange={handleCategoryChange}
           />
 
           <MultiSelectDropdown
             label="Subcategories"
-            options={SUBCATEGORY_OPTIONS}
+            options={availableSubcategories}
             selected={selectedSubcategories}
             onChange={(vals) => setForm({ ...form, subcategories: vals.join(", ") })}
           />

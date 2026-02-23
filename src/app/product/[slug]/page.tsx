@@ -4,8 +4,8 @@ import Footer from "@/components/Footer";
 import Newsletter from "@/components/Newsletter";
 import ProductDetail from "@/components/ProductDetail";
 import { adminDb } from "@/lib/firebase-admin";
-import Image from "next/image";
 import Link from "next/link";
+import BookImage from "@/components/BookImage";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -99,12 +99,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <div className="grid gap-5 grid-cols-2 md:grid-cols-3">
               {related.map((item) => (
                 <Link
-                  key={item.slug}
+                  key={item.id}
                   href={`/product/${item.slug}`}
                   className="group relative rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
                 >
                   <figure className="aspect-[3/4] overflow-hidden">
-                    <Image
+                    <BookImage
                       src={item.image}
                       alt={item.title}
                       width={200}

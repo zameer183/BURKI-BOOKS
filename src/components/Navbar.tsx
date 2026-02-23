@@ -11,7 +11,7 @@ const navLinks = [
   { name: "FEATURED", href: "/featured" },
   { name: "POPULAR", href: "/popular" },
   { name: "ABOUT", href: "/about" },
-  { name: "CONTACT", href: "/contact" },
+  { name: "CONTACT", href: "/contact-us" },
 ];
 
 const catalogCategories = [
@@ -85,8 +85,17 @@ const catalogCategories = [
 const socialLinks = [
   { icon: FaFacebookF, href: "https://www.facebook.com/share/1C6TLz4jCG/" },
   { icon: FaInstagram, href: "https://www.instagram.com/burkibooks/profilecard/?igsh=MW05aGt2c3R6eWFwZA==" },
-  { icon: FaWhatsapp, href: "https://wa.me/message/HUW2DFBLWKKLI1" },
+  { icon: FaWhatsapp, href: "https://wa.me/923402715205" },
 ];
+
+interface SearchResult {
+  id: string;
+  slug: string;
+  title: string;
+  author: string;
+  image: string;
+  price: number;
+}
 
 export default function Navbar() {
   const [isHidden, setIsHidden] = useState(false);
@@ -94,11 +103,39 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [catalogOpen, setCatalogOpen] = useState(false);
   const [openCategory, setOpenCategory] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [searching, setSearching] = useState(false);
   const lastScroll = useRef(0);
   const searchRef = useRef<HTMLDivElement>(null);
   const catalogRef = useRef<HTMLDivElement>(null);
   const mobileCatalogRef = useRef<HTMLDivElement>(null);
+  const searchTimerRef = useRef<NodeJS.Timeout | null>(null);
   const { totalItems, setIsCartOpen } = useCart();
+
+  const handleSearch = (value: string) => {
+    setSearchQuery(value);
+    if (searchTimerRef.current) clearTimeout(searchTimerRef.current);
+    if (!value.trim()) {
+      setSearchResults([]);
+      setSearching(false);
+      return;
+    }
+    setSearching(true);
+    searchTimerRef.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/products?q=${encodeURIComponent(value.trim())}`);
+        if (res.ok) {
+          const data = await res.json();
+          setSearchResults(data.slice(0, 6));
+        }
+      } catch {
+        setSearchResults([]);
+      } finally {
+        setSearching(false);
+      }
+    }, 300);
+  };
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -262,21 +299,58 @@ export default function Navbar() {
               </button>
               {searchOpen && (
                 <div className="absolute top-full right-0 mt-2 w-[260px] sm:w-72 bg-white shadow-xl rounded-xl p-2.5 border border-gray-100 z-50">
-                  <form
-                    onSubmit={(e) => { e.preventDefault(); setSearchOpen(false); }}
-                    className="flex items-center bg-[#f7f7f7] rounded-lg px-3 py-2"
-                  >
+                  <div className="flex items-center bg-[#f7f7f7] rounded-lg px-3 py-2">
                     <FaSearch className="text-gray-400 text-[10px] flex-shrink-0" />
                     <input
                       type="text"
                       placeholder="Search books..."
+                      value={searchQuery}
+                      onChange={(e) => handleSearch(e.target.value)}
                       className="flex-1 bg-transparent text-xs text-[#2f2f2f] focus:outline-none ml-2"
                       autoFocus
                     />
-                    <button type="submit" className="text-[10px] font-semibold text-white bg-[#0E7E8B] px-2.5 py-1 rounded-md hover:bg-[#0a6b76] transition flex-shrink-0">
-                      Go
-                    </button>
-                  </form>
+                    {searchQuery && (
+                      <button
+                        type="button"
+                        onClick={() => { setSearchQuery(""); setSearchResults([]); }}
+                        className="text-gray-400 hover:text-gray-600 mr-1"
+                      >
+                        <FaTimes size={9} />
+                      </button>
+                    )}
+                  </div>
+                  {/* Search Results */}
+                  {searchQuery.trim() && (
+                    <div className="mt-2 max-h-72 overflow-y-auto">
+                      {searching ? (
+                        <p className="text-[10px] text-gray-400 text-center py-4">Searching...</p>
+                      ) : searchResults.length > 0 ? (
+                        searchResults.map((book) => (
+                          <Link
+                            key={book.id}
+                            href={`/product/${book.slug}`}
+                            onClick={() => { setSearchOpen(false); setSearchQuery(""); setSearchResults([]); }}
+                            className="flex items-center gap-2.5 p-2 rounded-lg hover:bg-[#f7f7f7] transition"
+                          >
+                            <Image
+                              src={book.image || "/images/placeholder.png"}
+                              alt={book.title}
+                              width={32}
+                              height={44}
+                              className="rounded object-cover w-8 h-11 flex-shrink-0"
+                            />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-[11px] font-semibold text-[#2f2f2f] truncate">{book.title}</p>
+                              <p className="text-[9px] text-gray-500 truncate">{book.author}</p>
+                              <p className="text-[9px] font-bold text-[#0E7E8B]">Rs. {book.price}</p>
+                            </div>
+                          </Link>
+                        ))
+                      ) : (
+                        <p className="text-[10px] text-gray-400 text-center py-4">No books found</p>
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
             </div>

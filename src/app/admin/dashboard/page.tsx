@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FaBook, FaBoxOpen, FaClock, FaMoneyBillWave } from "react-icons/fa";
+import { FaBook, FaBoxOpen, FaClock, FaEnvelope, FaMoneyBillWave } from "react-icons/fa";
 
 interface Stats {
   totalProducts: number;
   totalOrders: number;
   pendingOrders: number;
   revenue: number;
+  unreadMessages: number;
 }
 
 export default function DashboardPage() {
@@ -16,19 +17,22 @@ export default function DashboardPage() {
     totalOrders: 0,
     pendingOrders: 0,
     revenue: 0,
+    unreadMessages: 0,
   });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchStats() {
       try {
-        const [productsRes, ordersRes] = await Promise.all([
+        const [productsRes, ordersRes, messagesRes] = await Promise.all([
           fetch("/api/products"),
           fetch("/api/orders"),
+          fetch("/api/messages"),
         ]);
 
         const products = productsRes.ok ? await productsRes.json() : [];
         const orders = ordersRes.ok ? await ordersRes.json() : [];
+        const messages = messagesRes.ok ? await messagesRes.json() : [];
 
         setStats({
           totalProducts: products.length,
@@ -39,6 +43,9 @@ export default function DashboardPage() {
           revenue: orders
             .filter((o: { status: string }) => o.status !== "cancelled")
             .reduce((sum: number, o: { subtotal: number }) => sum + (o.subtotal || 0), 0),
+          unreadMessages: Array.isArray(messages)
+            ? messages.filter((m: { status: string }) => m.status === "unread").length
+            : 0,
         });
       } catch {
         // stats stay at 0
@@ -74,6 +81,12 @@ export default function DashboardPage() {
       value: `Rs. ${stats.revenue.toLocaleString()}`,
       icon: FaMoneyBillWave,
       color: "bg-green-600",
+    },
+    {
+      label: "Unread Messages",
+      value: stats.unreadMessages,
+      icon: FaEnvelope,
+      color: "bg-blue-600",
     },
   ];
 

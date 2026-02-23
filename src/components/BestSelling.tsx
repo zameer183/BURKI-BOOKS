@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
+import BookImage from "@/components/BookImage";
 import { useRouter } from "next/navigation";
 import { FaArrowRight, FaShoppingCart } from "react-icons/fa";
 import { useCart } from "@/context/CartContext";
@@ -66,7 +66,7 @@ export default function BestSelling() {
               className="relative rounded-xl overflow-hidden cursor-pointer group shadow-xl max-w-[180px] mx-auto md:max-w-none"
               onClick={goToDetail}
             >
-              <Image
+              <BookImage
                 src={book.image}
                 alt="Best Selling Book"
                 width={300}

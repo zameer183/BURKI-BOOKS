@@ -1,6 +1,15 @@
+import Link from "next/link";
 import { FaFacebookF, FaInstagram, FaWhatsapp, FaTwitter, FaTiktok } from "react-icons/fa";
 import { BsThreads } from "react-icons/bs";
 import Logo from "./Logo";
+
+const quickLinks = [
+  { name: "Home", href: "/" },
+  { name: "Featured", href: "/featured" },
+  { name: "Popular", href: "/popular" },
+  { name: "About", href: "/about" },
+  { name: "Contact", href: "/contact-us" },
+];
 
 export default function Footer() {
   return (
@@ -14,7 +23,7 @@ export default function Footer() {
               {[
                 { icon: FaFacebookF, href: "https://www.facebook.com/share/1C6TLz4jCG/" },
                 { icon: FaInstagram, href: "https://www.instagram.com/burkibooks/profilecard/?igsh=MW05aGt2c3R6eWFwZA==" },
-                { icon: FaWhatsapp, href: "https://wa.me/message/HUW2DFBLWKKLI1" },
+                { icon: FaWhatsapp, href: "https://wa.me/923402715205" },
                 { icon: FaTwitter, href: "https://x.com/BurkiBooks?t=6L-KtcaGlaMLkh9BzDP5oQ&s=09" },
                 { icon: FaTiktok, href: "https://www.tiktok.com/@burkibooks" },
                 { icon: BsThreads, href: "https://www.threads.com/@burkibooks" },
@@ -38,11 +47,11 @@ export default function Footer() {
             <div>
               <h5 className="text-xs font-semibold text-white mb-2 md:text-sm md:mb-3">Quick Links</h5>
               <ul className="space-y-1 md:space-y-1.5">
-                {["Home", "Featured", "Popular", "Special Offers", "About", "Contact"].map((item) => (
-                  <li key={item}>
-                    <a href="#" className="text-white/60 text-[11px] md:text-xs hover:text-white transition">
-                      {item}
-                    </a>
+                {quickLinks.map((item) => (
+                  <li key={item.name}>
+                    <Link href={item.href} className="text-white/60 text-[11px] md:text-xs hover:text-white transition">
+                      {item.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -63,7 +72,7 @@ export default function Footer() {
                   <span className="text-white/20">|</span>
                   <a href="https://www.tiktok.com/@burkibooks" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition inline-flex items-center gap-1"><FaTiktok /> TikTok</a>
                   <span className="text-white/20">|</span>
-                  <a href="https://wa.me/message/HUW2DFBLWKKLI1" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition inline-flex items-center gap-1"><FaWhatsapp /> WhatsApp</a>
+                  <a href="https://wa.me/923402715205" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition inline-flex items-center gap-1"><FaWhatsapp /> WhatsApp</a>
                   <span className="text-white/20">|</span>
                   <a href="https://www.facebook.com/share/1C6TLz4jCG/" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition inline-flex items-center gap-1"><FaFacebookF /> Facebook</a>
                   <span className="text-white/20">|</span>
@@ -89,7 +98,7 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href="https://wa.me/message/HUW2DFBLWKKLI1" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition inline-flex items-center gap-1.5">
+                  <a href="https://wa.me/923402715205" target="_blank" rel="noreferrer" className="text-white/60 hover:text-white transition inline-flex items-center gap-1.5">
                     <FaWhatsapp /> WhatsApp
                   </a>
                 </li>

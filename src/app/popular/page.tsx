@@ -6,12 +6,34 @@ import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Popular Books – Trending & Bestselling Books in Pakistan",
+  title: "Popular Books – Trending & Bestselling Books in Pakistan | Burki Books",
   description:
-    "Browse the most popular and trending books in Pakistan. Bestsellers in Fiction, History, Islamic Studies, Politics & more. Order online from Burki Books.",
+    "Browse the most popular and trending books in Pakistan. Bestsellers in Fiction, History, Islamic Studies, Politics, Pashto Literature & more. Cash on delivery available. Order online from Burki Books.",
+  keywords: [
+    "popular books Pakistan",
+    "trending books Pakistan",
+    "bestselling books Pakistan",
+    "best fiction books Pakistan",
+    "Islamic books online",
+    "history books Pakistan",
+    "Pashto books online",
+    "CSS preparation books",
+    "buy books online Lahore",
+  ],
+  alternates: {
+    canonical: "/popular",
+  },
   openGraph: {
-    title: "Popular Books – Trending & Bestselling Books in Pakistan",
-    description: "Browse the most popular and trending books in Pakistan at Burki Books.",
+    title: "Popular & Trending Books in Pakistan – Burki Books",
+    description:
+      "The most popular books customers are buying. Fiction, History, Islamic Studies, Politics & more. Order with nationwide delivery.",
+    url: "/popular",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Popular Books – Bestsellers in Pakistan | Burki Books",
+    description:
+      "Browse trending & bestselling books across all genres. Order online with COD from Burki Books.",
   },
 };
 

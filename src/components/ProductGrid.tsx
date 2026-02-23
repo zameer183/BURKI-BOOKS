@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
+import BookImage from "@/components/BookImage";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
@@ -29,7 +29,7 @@ export default function ProductGrid() {
   }, []);
 
   const toBook = (p: ApiProduct): Book => ({
-    id: p.slug,
+    id: p.id || p.slug,
     title: p.title,
     author: p.author,
     price: p.price,
@@ -52,12 +52,12 @@ export default function ProductGrid() {
         <div className="grid gap-5 grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
           {products.map((product) => (
             <article
-              key={product.slug}
+              key={product.id}
               className="group relative rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer"
               onClick={() => router.push(`/product/${product.slug}`)}
             >
               <figure className="aspect-[3/4] overflow-hidden">
-                <Image
+                <BookImage
                   src={product.image}
                   alt={product.title}
                   width={200}

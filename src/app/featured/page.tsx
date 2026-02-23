@@ -5,12 +5,32 @@ import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Featured Books – Handpicked Reads from Burki Books",
+  title: "Featured Books – Handpicked & Curated Reads | Burki Books Pakistan",
   description:
-    "Discover curated collections, staff picks, and limited-time featured books. Handpicked by Burki Books for readers across Pakistan.",
+    "Discover handpicked featured books, staff picks & curated collections from Burki Books. Fiction, History, Islamic Thought, Poetry & more. Updated weekly with fresh recommendations.",
+  keywords: [
+    "featured books Pakistan",
+    "curated books",
+    "staff picks Burki Books",
+    "best books to read Pakistan",
+    "handpicked books online",
+    "book recommendations Pakistan",
+    "new books Pakistan",
+  ],
+  alternates: {
+    canonical: "/featured",
+  },
   openGraph: {
     title: "Featured Books – Handpicked Reads from Burki Books",
-    description: "Curated collections and staff picks from Burki Books.",
+    description:
+      "Curated collections, staff picks & limited-time featured books. Handpicked by Burki Books for readers across Pakistan. Updated weekly.",
+    url: "/featured",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Featured Books – Curated Reads from Burki Books",
+    description:
+      "Handpicked books across Fiction, History, Memoir & more. Refreshed weekly by Burki Books.",
   },
 };
 

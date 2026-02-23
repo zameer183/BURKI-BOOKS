@@ -17,43 +17,72 @@ const prata = Prata({
 });
 
 export const metadata: Metadata = {
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [
+      { url: "/icon.png", type: "image/png" },
+    ],
+  },
   title: {
-    default: "Burki Books – Buy Books Online in Pakistan | From Classics to Curiosity",
+    default: "Burki Books – Buy Books Online in Pakistan | New & Used Books | Free Delivery",
     template: "%s | Burki Books",
   },
   description:
-    "Burki Books is Pakistan's growing online bookstore. Buy new & old books on Fiction, History, Politics, Islamic Thought, Pashto Literature & more. Cash on delivery & online payment available.",
+    "Burki Books is Pakistan's leading online bookstore. Buy new & used books on Fiction, History, Politics, Islamic Thought, Pashto Literature, Urdu Literature, CSS/PMS Preparation & more. Cash on delivery & online payment. 5,000+ books available with nationwide delivery.",
   keywords: [
     "buy books online Pakistan",
     "Burki Books",
     "online bookstore Pakistan",
-    "Urdu books",
-    "Pashto books",
-    "Islamic books",
+    "Urdu books online",
+    "Pashto books online",
+    "Islamic books Pakistan",
     "history books Pakistan",
     "fiction books Pakistan",
-    "CSS books",
+    "CSS books Pakistan",
     "PMS preparation books",
     "cheap books Pakistan",
+    "used books Pakistan",
+    "book delivery Pakistan",
+    "Lahore bookstore",
+    "buy books Lahore",
+    "Pakistani literature",
+    "cash on delivery books",
   ],
-  authors: [{ name: "Burki Books" }],
+  authors: [{ name: "Burki Books", url: "https://burkibooks.com" }],
+  creator: "Burki Books",
+  publisher: "Burki Books",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     locale: "en_PK",
     siteName: "Burki Books",
-    title: "Burki Books – Buy Books Online in Pakistan",
+    title: "Burki Books – Buy Books Online in Pakistan | 5,000+ Books",
     description:
-      "Pakistan's growing online bookstore. Fiction, History, Politics, Islamic Thought, Pashto Literature & more. Order now with nationwide delivery.",
+      "Pakistan's growing online bookstore. Fiction, History, Politics, Islamic Thought, Pashto Literature & more. 5,000+ books with nationwide delivery. Cash on delivery available.",
+    url: "/",
   },
   twitter: {
     card: "summary_large_image",
     title: "Burki Books – Buy Books Online in Pakistan",
     description:
-      "Pakistan's growing online bookstore. Fiction, History, Politics, Islamic Thought & more.",
+      "Pakistan's growing online bookstore. 5,000+ books across Fiction, History, Politics, Islamic Thought & more. Order now!",
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
   metadataBase: new URL("https://burkibooks.com"),
 };

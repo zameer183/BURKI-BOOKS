@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import Image from "next/image";
+import BookImage from "@/components/BookImage";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/types/book";
@@ -166,7 +166,7 @@ export default function CheckoutPage() {
                 <div className="space-y-4">
                   {items.map((item) => (
                     <div key={item.id} className="flex gap-3 bg-[#f7f7f7] rounded-xl p-3">
-                      <Image
+                      <BookImage
                         src={item.image}
                         alt={item.title}
                         width={50}
